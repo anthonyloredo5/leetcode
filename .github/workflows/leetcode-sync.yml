@@ -10,13 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ Checkout
+      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           persist-credentials: false
 
-      # 2️⃣ Run LeetCode sync (NO COMMIT)
+      # 2️⃣ Run LeetCode sync (no commit)
       - name: LeetCode Sync
         uses: joshcai/leetcode-sync@v1.7
         with:
@@ -27,24 +27,5 @@ jobs:
           destination-folder: ""
           verbose: true
 
-      # 3️⃣ Configure Git as YOU
-      - name: Configure Git identity
-        run: |
-          git config user.name "Anthony Loredo"
-          git config user.email "anthonyloredo5@gmail.com"
-
-      # 4️⃣ Commit as YOU (this is the magic)
-      - name: Commit LeetCode solutions
-        run: |
-          git add .
-          git diff --cached --quiet || \
-          git commit \
-            --author="Anthony Loredo anthonyloredo5@gmail.com" \
-            -m "[LeetCode Sync] solutions"
-
-      # 5️⃣ Push using GitHub token
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.8.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: main
+      # 3️⃣ Configure Git identity (YOU)
+      - name: Confi
