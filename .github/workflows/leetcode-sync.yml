@@ -1,51 +1,23 @@
 name: LeetCode Sync
 
 on:
-  # Manual trigger for instant testing
   workflow_dispatch:
-  # Optional: daily scheduled run (can adjust)
   schedule:
-    - cron: '0 0 * * *'  # runs once a day at midnight UTC
+    - cron: '0 0 * * *'  # daily at midnight UTC
 
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Checkout the repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Sync LeetCode submissions
+        uses: joshcai/leetcode-sync@v1.7
         with:
-          python-version: '3.x'
-
-      # 3️⃣ Install leetcode-cli
-      - name: Install leetcode-cli
-        run: |
-          pip install git+https://github.com/leetcode-tools/leetcode-cli.git
-
-      # 4️⃣ Sync LeetCode solutions
-      - name: Sync LeetCode Solutions
-        env:
-          LEETCODE_SESSION: ${{ secrets.LEETCODE_SESSION }}
-        run: |
-          # List all problems in Python (or your language)
-          leetcode user -l python
-
-          # Sync solved problems to repo
-          leetcode sync
-
-          # Organize commits
-          git config user.name "Your Name"
-          git config user.email "your-email@example.com"
-
-          # Stage changes
-          git add .
-
-          # Commit only if there are changes
-          git diff --cached --quiet || git commit -m "Sync new LeetCode solutions"
-
-          # Push to GitHub
-          git push
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          leetcode-csrf-token: ${{ secrets.LEETCODE_CSRF_TOKEN }}
+          leetcode-session: ${{ secrets.LEETCODE_SESSION }}
+          destination-folder: ""     # optional: set folder if you want
+          commit-header: "[LeetCode Sync]"
+          verbose: true
