@@ -31,7 +31,7 @@ jobs:
       - name: Configure Git identity
         run: |
           git config user.name "Anthony Loredo"
-          git config user.email "YOUR_GITHUB_NOREPLY_EMAIL"
+          git config user.email "anthonyloredo5@gmail.com"
 
       # 4️⃣ Commit as YOU (this is the magic)
       - name: Commit LeetCode solutions
@@ -39,7 +39,7 @@ jobs:
           git add .
           git diff --cached --quiet || \
           git commit \
-            --author="Anthony Loredo <YOUR_GITHUB_NOREPLY_EMAIL>" \
+            --author="Anthony Loredo anthonyloredo5@gmail.com" \
             -m "[LeetCode Sync] solutions"
 
       # 5️⃣ Push using GitHub token
