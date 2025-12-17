@@ -28,4 +28,29 @@ jobs:
           verbose: true
 
       # 3️⃣ Configure Git identity (YOU)
-      - name: Confi
+      - name: Configure Git identity
+        run: |
+          git config user.name "Anthony Loredo"
+          git config user.email "anthonyloredo5@gmail.com"
+
+      # 3.5️⃣ Pull & rebase remote main to avoid push errors
+      - name: Sync with remote main
+        run: |
+          git fetch origin main
+          git rebase origin/main
+
+      # 4️⃣ Commit LeetCode solutions as YOU
+      - name: Commit LeetCode solutions
+        run: |
+          git add .
+          git diff --cached --quiet || \
+          git commit \
+            --author="Anthony Loredo anthonyloredo5@gmail.com" \
+            -m "[LeetCode Sync] solutions"
+
+      # 5️⃣ Push changes to main
+      - name: Push changes
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
